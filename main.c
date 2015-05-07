@@ -11,6 +11,7 @@ int main() {
 		frase[i] = rand()%10;
 	}
 	
+	printf("\n\nEste foi um teste para GITHUB !!!!\n\n");
 	for(i=0; i<20; i++){
 		printf("==> %d\n", frase[i]);
 	}
