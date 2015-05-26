@@ -1,0 +1,107 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <stdbool.h>
+
+	// Valor da constate de máximo do vetor e valor máximo para sorteio de random
+	const int max = 100;
+	const int max_rand = 100;
+
+//------------------- Método SelectionSort ----------------------------------
+// Aula de apoio: https://www.youtube.com/watch?v=jk3RQNgGRQE
+
+/*Porque não tem retorno ? Pois o resultado da expressão é o próprio vetor, passado por referência
+
+Como funciona o método de ordenação selection sort? 
+Fixa uma posição do vetor e compara com todas as outras. Quando encotra a posição menor troca a atual pela menor.
+*/
+
+// Método SELECTION SORT
+void selection_sort(int vet[]){
+	
+	int menor, aux;
+	int i, j;
+	
+	for(i=0; i<max-1 ; i++){
+		menor = i;
+		for(j=i+1; j<max; j++){
+			if(vet[menor]>vet[j]){
+					menor = j;
+			}
+			if(i!=menor){
+				aux = vet[i];
+				vet[i] = vet[menor];
+				vet[menor] = aux;			
+			}
+		}
+	}
+}
+
+
+// MÉTODO PREENCHE VETOR
+void preenche_vetor(int vet[]){
+	
+	// Utilizando o random - sorteio para preencher o vetor
+	int i,j;
+	bool ok = true;
+	srand(time(NULL));
+	for(i=0; i<max; i++){
+		
+		vet[i] = rand()%max_rand;
+	}
+}
+
+
+// MÉTODO IMPRIME VETOR
+void imprime_vetor(int vet[]){
+	int i, cont=0;
+	
+	printf("\n\n\n\t| ");
+	for(i=0; i<max; i++){
+		cont++;
+		if(vet[i] < 10){
+			printf("00%d | ", vet[i]);
+		}
+		else if(vet[i]<100){
+			printf("0%d | ", vet[i]);
+		}
+		else{
+			printf("%d | ", vet[i]);
+		}
+		if(cont%10==0){
+			printf("\n");
+			printf("\t| ");
+		}
+	}
+}
+
+
+int main() {
+	
+	printf("\n\t---------- | STUDYING SORT SELECTION METHOD | ----------");
+	printf("\n\t\t-------- | Welington Batista Pereira | --------\n\n");
+	// Declaração de variáveis
+	int i;
+	int vetor[max];
+	
+	// Função - Preenche vetor
+	printf("\n\n\n\n\t=====> SORTEANDO VALORES PARA O VETOR DE %d POSICOES \n\n", max);
+	preenche_vetor(vetor);
+	
+	// Função Imprime - Vai exibir os valores sorteados para o vetor
+	imprime_vetor(vetor);
+	
+	printf("\n\n\n\n\t=====> ORDENANDO VETOR \n\n", max);
+	// Funão de ordenação - SELECTIONSORT
+	selection_sort(vetor);
+
+	// Função Imprime - Imprime números ordenados
+	imprime_vetor(vetor);
+
+
+
+
+	printf("\n\n\n");
+	system("PAUSE");
+	return 0;
+}
