@@ -1,0 +1,94 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <stdbool.h>
+
+	// Valor da constate de máximo do vetor e valor máximo para sorteio de random
+	const int max = 100;
+	const int max_rand = 100;
+
+//------------------- Método Insertion Sort ----------------------------------
+// Aula de apoio: https://www.youtube.com/watch?v=bNcD4lcwo6Q
+
+
+// Método INSERTION SORT
+void insertion_sort(int vet[]){
+	
+	int aux, i, j;
+	
+	for(i=0; i<max; i++){
+		j=i;
+		while(vet[j] < vet[j-1] && j>0){
+			aux = vet[j];
+			vet[j] = vet[j-1];
+			vet[j-1] = aux;
+			j--;
+		}
+	}
+	
+}
+
+
+// MÉTODO PREENCHE VETOR
+void preenche_vetor(int vet[]){
+	
+	// Utilizando o random - sorteio para preencher o vetor
+	int i,j;
+	bool ok = true;
+	srand(time(NULL));
+	for(i=0; i<max; i++){
+		
+		vet[i] = rand()%max_rand;
+	}
+}
+
+
+// MÉTODO IMPRIME VETOR
+void imprime_vetor(int vet[]){
+	int i, cont=0;
+	
+	printf("\n\n\n\t| ");
+	for(i=0; i<max; i++){
+		cont++;
+		if(vet[i] < 10){
+			printf("00%d | ", vet[i]);
+		}
+		else if(vet[i]<100){
+			printf("0%d | ", vet[i]);
+		}
+		else{
+			printf("%d | ", vet[i]);
+		}
+		if(cont%10==0){
+			printf("\n");
+			printf("\t| ");
+		}
+	}
+}
+
+
+int main() {
+	
+	printf("\n\t---------- | STUDYING SORT SELECTION METHOD | ----------");
+	printf("\n\t\t-------- | Welington Batista Pereira | --------\n\n");
+	// Declaração de variáveis
+	int i;
+	int vetor[max];
+	
+	// Função - Preenche vetor
+	printf("\n\n\n\n\t=====> SORTEANDO VALORES PARA O VETOR DE %d POSICOES \n\n", max);
+	preenche_vetor(vetor);
+	
+	// Função Imprime - Vai exibir os valores sorteados para o vetor
+	imprime_vetor(vetor);
+	
+	printf("\n\n\n\n\t=====> ORDENANDO VETOR \n\n", max);
+	// Funão de ordenação - SELECTIONSORT
+	insertion_sort(vetor);
+
+	// Função Imprime - Imprime números ordenados
+	imprime_vetor(vetor);
+
+	printf("\n\n\n");
+	system("PAUSE");
+	return 0;
