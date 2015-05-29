@@ -8,24 +8,32 @@
 	const int max_rand = 100;
 
 // Função SHELL SORT--------------------------------------------------------------------
-void shell_sort(int vet){
-	
-	int gap = (int)max/2;
-	printf("%d", gap);
-	int i, j, k;
-	
-	for(i = gap; gap>0 ; gap--){
-		for(j=0; j<max; j++){
-			if(vet[j] > vet[j+gap]){
-				int p = vet[j];
-				vet[j] = vet[j+gap];
-				vet[j+gap] = p;
-			}
-		}
-		for(k = 0; k<max; k++){
-			prntf(" ");
-		}
-	}
+void shell_sort(int *vetor)
+{
+   int i = (max - 1) / 2;
+   int chave, k, aux;
+ 
+   while(i != 0)
+   {
+      do
+      {
+         chave = 1;
+         for(k = 0; k < max - i; ++k)
+         {
+         	// Vai considerar como pivo o tamanho do vetor divido por 2, fazerndo a comparação para os valores superiores a metade
+         	
+            if(vetor[k] > vetor[k + i])
+            {
+               aux = vetor[k];
+               vetor[k] = vetor[k + i];
+               vetor[k + i] = aux;
+               chave = 0;
+            }
+         }
+      }while(chave == 0);
+      // terminado , divide o pivô por 2 dinovo e faz o mesmo processo até chegar o pivo == 0
+      i = i / 2;
+   }
 }
 //--------------------------------------------------------------------------------------
 
