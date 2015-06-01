@@ -96,8 +96,8 @@ int main() {
 	
 	printf("\n\n\n\n\t=====> ORDENANDO VETOR \n\n", max);
 	// Funão de ordenação - QUICKSORT
-	int esq = 0, dir;
-	quick_sort(vetor, esq, dir);
+	int esq = 0;
+	quick(vetor, esq, max-1);
 
 	// Função Imprime - Imprime números ordenados
 	imprime_vetor(vetor);
