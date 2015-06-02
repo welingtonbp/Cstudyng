@@ -1,0 +1,45 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>>
+	const int MAX = 100000;
+/* Controle de tempo de execução*/
+
+int main() {
+	
+	// Declaração de variáveis
+	int vet[MAX];
+	clock_t tInicio, tFim;
+	
+	funcao_exemplo(vet, tInicio, tFim);
+	
+	printf("\n\n\n");
+	system("PAUSE");
+	return 0;
+}
+
+//Exemplo de função -----------------------------------------------------------------------
+void funcao_exemplo(int vet[], int tInicio, int tFim, int tDecorrido){
+	int i;
+	tInicio = clock(); // Marca tempo inicial
+	
+	srand(time(NULL));
+	for(i=0; i<MAX; i++){
+		vet[i] = i*3/4 + rand()*10;
+		printf("\n|||||||||| %d |||||||||||", vet[i]);
+	}
+	
+	tFim = clock(); // Marca tempo final
+	
+	controla_tempo(tInicio, tFim); // Envia os valores armazenados de tempo inicial e final para a função que calcula o tempo decorrido
+}
+//---------------------------------------------------------------------------------------
+
+void controla_tempo(int tInicio, int tFim){
+	
+	clock_t tDecorrido;
+	
+	tDecorrido = ((tFim - tInicio) / (CLOCKS_PER_SEC / 1000)); // CLOK_PER_SEC vai armazenar a quantidade de clocks do processador por segundo
+	                                                           // e dividindo por mil temos milisegundos
+	
+	printf("\n\n\t\tTEMPO DECORRIDO ==> %d MILISEGUNDOS", tDecorrido);
+}
