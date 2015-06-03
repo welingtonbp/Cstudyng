@@ -1,0 +1,217 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+	const int MAX = 1000;
+	const int MAX_RAND = 100;
+		
+/*O objetivo deste programa é comparar o tempo gasto em cada metodo de ordenação*/
+
+int main() {
+	clock_t tempo_gasto[5];
+	int vet[MAX];
+	
+	printf("\n\n\t\t|| COMPARACAO DE TEMPO DE EXECUCAO ||\n\n");
+	printf("\n\t\t||       METODOS DE ORDENACAO      ||\n\n");
+	
+	//FAz todos os métodos de ordenação e armazena-se o tempo de cada um
+	controla_metodos(vet, tempo_gasto);
+	
+	// Imprime os tempo
+	imprime_tempos(tempo_gasto);
+	
+	printf("\n\n\n");
+	system("PAUSE");
+	return 0;
+}
+
+// MÉTODO PREENCHE VETOR
+void preenche_vetor(int vet[]){
+	int i,j;
+	srand(time(NULL));
+	for(i=0; i<MAX; i++){
+		vet[i] = rand()%MAX_RAND;
+	}
+}
+
+//Método para organizar a chamada de cada tipo de ordenação 
+void controla_metodos(int vet[], clock_t tempo_gasto[]){
+	int temp;
+	clock_t tInicio, tFim;
+	
+	tInicio = clock();
+	
+	tempo_gasto[0] = insertion_sort(vet, temp, tInicio, tFim);
+	
+	tempo_gasto[1] = selection_sort(vet, temp, tInicio, tFim);
+	
+	tempo_gasto[2] = bubble_sort(vet, temp, tInicio, tFim);
+	
+	int esq = 0;
+	tempo_gasto[3] = quick(vet,esq, MAX-1, temp, tInicio, tFim);
+	
+	tempo_gasto[4] = shell_sort(vet, temp, tInicio, tFim);
+
+	tFim = clock();
+	tempo_gasto[5] = controla_tempo( tInicio, tFim);
+	
+}
+
+
+
+// Método INSERTION SORT
+int insertion_sort(int vet[], int temp, clock_t tInicio, clock_t tFim){
+	tInicio = clock();
+	
+	int aux, i, j;
+	for(i=0; i<MAX; i++){
+		j=i;
+		while(vet[j] < vet[j-1] && j>0){
+			aux = vet[j];
+			vet[j] = vet[j-1];
+			vet[j-1] = aux;
+			j--;
+		}
+	}
+	
+	tFim = clock();
+	temp = controla_tempo( tInicio, tFim);
+	
+	return (temp);
+}
+
+// Método SELECTION SORT
+void selection_sort(int vet[], int temp, clock_t tInicio, clock_t tFim){	
+	tInicio = clock();
+	
+	int menor, aux;
+	int i, j;
+	for(i=0; i<MAX-1 ; i++){
+		menor = i;
+		for(j=i+1; j<MAX; j++){
+			if(vet[menor]>vet[j]){
+					menor = j;
+			}
+			if(i!=menor){
+				aux = vet[i];
+				vet[i] = vet[menor];
+				vet[menor] = aux;			
+			}
+		}
+	}
+	
+	tFim = clock();
+	temp = controla_tempo( tInicio, tFim);
+	
+	return (temp);
+}
+
+// Função BubbleSort
+void bubble_sort(int vet[], int temp, clock_t tInicio, clock_t tFim){
+	tInicio = clock();
+	
+	int k=MAX;
+	int i, j, aux;
+	for(i=0; i<MAX-1 ; i++){
+		for(j=0; j<MAX; j++){
+			if(vet[j] > vet[j+1]){
+				aux = vet[j];
+				vet[j] = vet[j+1];
+				vet[j+1]=aux;
+			}
+		}
+		k--;
+	}
+	
+	tFim = clock();
+	temp = controla_tempo( tInicio, tFim);
+	
+	return (temp);
+}
+
+// Função QUICK SORT--------------------------------------------------------------------
+// Baseia-se na divisão e conquista
+// Método recursivo
+int dividir(int vetor[],int esq, int dir){
+	int aux; //troca de posicoes
+    int cont = esq, i;
+    for(i=esq+1 ; i<=dir ; i++){
+        if( vetor[i] < vetor[esq] ){
+            cont++;
+            aux=vetor[i];
+            vetor[i]=vetor[cont];
+            vetor[cont]=aux;
+        }
+    }
+    aux=vetor[esq];
+    vetor[esq]=vetor[cont];
+    vetor[cont]=aux;
+    return cont;
+}
+
+void quick(int vet[],int esq, int dir, int temp, clock_t tInicio, clock_t tFim){
+	tInicio = clock();
+	
+	int pos;
+    if(esq < dir){
+        pos = dividir(vet,esq,dir);
+        quick(vet,esq,pos-1, temp,tInicio,  tFim);
+        quick(vet,pos+1,dir, temp,tInicio,  tFim);
+    }
+    
+    tFim = clock();
+	temp = controla_tempo( tInicio, tFim);
+	
+	return (temp);
+}
+//--------------------------------------------------------------------------------------
+
+// Função SHELL SORT--------------------------------------------------------------------
+void shell_sort(int *vetor, int temp, clock_t tInicio, clock_t tFim)
+{
+	tInicio = clock();
+	
+   int i = (MAX - 1) / 2;
+   int chave, k, aux;
+   while(i != 0)
+   {
+      do
+      {
+         chave = 1;
+         for(k = 0; k < MAX - i; ++k)
+         {
+         	// Vai considerar como pivo o tamanho do vetor divido por 2, fazerndo a comparação para os valores superiores a metade
+            if(vetor[k] > vetor[k + i])
+            {
+               aux = vetor[k];
+               vetor[k] = vetor[k + i];
+               vetor[k + i] = aux;
+               chave = 0;
+            }
+         }
+      }while(chave == 0);
+      // terminado , divide o pivô por 2 dinovo e faz o mesmo processo até chegar o pivo == 0
+      i = i / 2;
+   }
+   
+   tFim = clock();
+	temp = controla_tempo( tInicio, tFim);
+	
+	return (temp);
+}
+//--------------------------------------------------------------------------------------
+
+void controla_tempo(clock_t tInicio, clock_t tFim){
+	clock_t tDecorrido=0;
+	tDecorrido = (tFim - tInicio)/CLOCKS_PER_SEC;
+}
+
+void imprime_tempos(clock_t tempo_gasto[]){
+	
+	printf("\n\t\tMETODO INSERT ==> %ld milisegundos", tempo_gasto[0]);
+	printf("\n\t\tMETODO SELECTION ==> %ld milisegundos", tempo_gasto[1]);
+	printf("\n\t\tMETODO BUBBLE ==> %ld milisegundos", tempo_gasto[2]);
+	printf("\n\t\tMETODO QUICK ==> %ld milisegundos", tempo_gasto[3]);
+	printf("\n\t\tMETODO SHELL ==> %ld milisegundos", tempo_gasto[4]);
+	printf("\n\n\t\tTEMPO TOTAL ==> %ld milisegundos", tempo_gasto[5]);
+}
+
