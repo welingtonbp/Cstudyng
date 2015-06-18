@@ -1,0 +1,36 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+// Cálculo fatorial utilizando recursividade
+
+int fatorial(int x){
+	
+	int resultado;
+	if(x == 0){
+		resultado = 1;
+	}else{
+		resultado = x * fatorial(x - 1); // isso significa que o computador está criando outra função em novos espaços de memória
+	}
+	
+	return (resultado);
+}
+
+
+int main() {
+	
+	int fatorial(int x);
+	int numero, resultado;
+	
+	printf("Digite um numero inteiro: ");
+	scanf("%.1f", &numero);
+	
+	resultado = fatorial(numero);
+	
+	printf("O fatorial eh ==> %.1f", resultado);
+	
+	
+	
+	printf("\n\n");
+	system("PAUSE");
+	return 0;
+}
