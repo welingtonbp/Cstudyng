@@ -7,7 +7,7 @@
 int exemplo_recursividade (int inicio, int limite){
 	if(inicio < limite){
 		printf(" %d |", inicio);
-		exemplo_recursividade (inicio+1, limite);
+		exemplo_recursividade (inicio+1, limite); // Chama a própria função incrementando a variável "início"
 	}
 }
 //-----------------------------------------------------------------------------------
